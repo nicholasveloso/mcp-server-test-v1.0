@@ -1,0 +1,29 @@
+{
+	"tavily": {
+		"api_key": "YOUR_TAVILY_API_KEY"
+	},
+	"database": {
+		"database_url": "postgresql://postgres:postgres@db-host:5432/mydb",
+		"host": "db-host",
+		"port": 5432,
+		"database": "mydb",
+		"user": "postgres",
+		"password": "postgres",
+		"password_file": "/app/secrets/db_password.txt",
+		"table": "documents",
+		"text_column": "content",
+		"embedding_column": "embedding",
+		"metadata_column": "metadata"
+	},
+	"ssh": {
+		"enabled": false,
+		"host": "bastion.example.com",
+		"port": 22,
+		"user": "ec2-user",
+		"private_key_file": "/app/secrets/keys/bastion.pem"
+	},
+	"pgai": {
+		"enabled": false,
+		"model": "text-embedding-3-small"
+	}
+}
