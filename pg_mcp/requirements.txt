@@ -1,0 +1,9 @@
+fastapi==0.112.2
+uvicorn[standard]==0.30.6
+psycopg[binary]==3.2.1
+pgvector==0.3.3
+python-dotenv==1.0.1
+pydantic==2.9.2
+sshtunnel==0.4.0
+paramiko==3.4.0
+orjson==3.10.7
