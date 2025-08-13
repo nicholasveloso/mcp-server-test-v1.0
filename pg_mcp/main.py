@@ -197,7 +197,7 @@ def hybrid_sql(db: DbConfig, use_pgai: bool, model: Optional[str]) -> str:
 		return (
 			f"SELECT *, "
 			f"({text_weight} * ts_rank_cd({ft}, plainto_tsquery('english', %(q)s)) - "
-			f"{vec_weight} * ({db.embedding_column} <-> ai.embed(%(q)s, %(model)s))) AS score "
+			f"{vec_weight} * ({db.embedding_column} <=> ai.embed(%(q)s, %(model)s))) AS score "
 			f"FROM {db.table} "
 			f"ORDER BY score DESC "
 			f"LIMIT %(k)s"
@@ -206,7 +206,7 @@ def hybrid_sql(db: DbConfig, use_pgai: bool, model: Optional[str]) -> str:
 		return (
 			f"SELECT *, "
 			f"({text_weight} * ts_rank_cd({ft}, plainto_tsquery('english', %(q)s)) - "
-			f"{vec_weight} * ({db.embedding_column} <-> %(v)s)) AS score "
+			f"{vec_weight} * ({db.embedding_column} <=> %(v)s)) AS score "
 			f"FROM {db.table} "
 			f"ORDER BY score DESC "
 			f"LIMIT %(k)s"
@@ -218,13 +218,13 @@ def semantic_sql(db: DbConfig, use_pgai: bool, model: Optional[str]) -> str:
 		model_name = model or (load_config_value("PGAI_MODEL") or "text-embedding-3-small")
 		return (
 			f"SELECT * FROM {db.table} "
-			f"ORDER BY {db.embedding_column} <-> ai.embed(%(q)s, %(model)s) "
+			f"ORDER BY {db.embedding_column} <=> ai.embed(%(q)s, %(model)s) "
 			f"LIMIT %(k)s"
 		)
 	else:
 		return (
 			f"SELECT * FROM {db.table} "
-			f"ORDER BY {db.embedding_column} <-> %(v)s "
+			f"ORDER BY {db.embedding_column} <=> %(v)s "
 			f"LIMIT %(k)s"
 		)
 
